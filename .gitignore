@@ -4,3 +4,4 @@ data.json
 test.yaml
 *.csv
 shapefiles/
+__pycache__/
