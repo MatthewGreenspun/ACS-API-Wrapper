@@ -20,7 +20,7 @@ export interface HighlightRange {
 }
 
 export interface Entry {
-	fields: Record<string, unknown>;
+	fields: Record<string, string>;
 	title: string;
 	url: string;
 }

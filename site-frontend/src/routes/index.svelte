@@ -7,7 +7,7 @@
 		if (storkInitialized) return;
 		stork = (<any>window).stork;
 		await stork?.initialize();
-		await stork?.register("acs-varlist", "http://localhost:3000/static/acs-varlist.st", {
+		await stork?.register("acs-tables", "http://localhost:3000/static/acs-tables.st", {
 			forceOverwrite: true
 		});
 		storkInitialized = true;
@@ -20,7 +20,8 @@
 	let search = "";
 	let debounceTimer: NodeJS.Timeout;
 
-	$: results = search && storkInitialized ? stork?.search("acs-varlist", search).results : [];
+	$: results = search && storkInitialized ? stork?.search("acs-tables", search).results : [];
+	$: console.log(results);
 
 	function debounce(event: Event) {
 		const newSearchValue = (<HTMLInputElement>event.target).value;
@@ -66,30 +67,15 @@
 	{#if results && storkInitialized}
 		{#each results as result}
 			<div class="border-2 px-3 py-3 border-gray-100 rounded box-border mt-1 mb-1">
-				<div class="flex">
-					<h3 class="text-teal-600 font-bold">{result.entry.title}</h3>
-					<p class="capitalize">
-						- {(result.entry.fields.colName
-							? result.entry.fields.colName
-							: result.entry.fields.tableName
-						).toLowerCase()}
-					</p>
+				<div class="flex justify-between">
+					<h3 class="text-teal-600 font-bold hover:underline">{result.entry.title}</h3>
+					<button class="bg-teal-400 py-1 px-3 rounded hover:bg-teal-500 transition">Select</button>
 				</div>
-				{#if result.entry.fields.colName}
-					<div class="flex">
-						<h3 class="text-teal-600 font-bold">{result.entry.fields.table}</h3>
-						<p class="capitalize">
-							-{result.entry.fields.tableName.toLowerCase()}
-						</p>
-					</div>
-				{/if}
-				<button class="bg-orange-400 py-1 px-3 rounded hover:bg-orange-500 transition"
-					>Select</button
-				>
+				<p class="capitalize">{result.entry.fields.tableName.toLowerCase()}</p>
 			</div>
 		{/each}
 	{/if}
 </div>
 
-<input data-stork="acs-varlist" class="hidden" />
-<div data-stork="acs-varlist-output" class="hidden" />
+<input data-stork="acs-tables" class="hidden" />
+<div data-stork="acs-tables-output" class="hidden" />
