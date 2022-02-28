@@ -1,16 +1,12 @@
-// module.exports = {
-// 	content: ['./src/**/*.{html,js,svelte,ts}'],
-// 	theme: {
-// 		extend: {}
-// 	},
-// 	plugins: []
-// };
 module.exports = {
-	// add this section
-	purge: ['./src/**/*.html', './src/**/*.svelte'],
+	purge: ["./src/**/*.html", "./src/**/*.svelte"],
 	darkMode: false,
 	theme: {
-		extend: {}
+		extend: {
+			flexGrow: {
+				2: 2
+			}
+		}
 	},
 	variants: {
 		extend: {}
