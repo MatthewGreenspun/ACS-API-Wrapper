@@ -23,7 +23,7 @@ census_tables:\n`;
 
 			let colNames = "    column_names:\n";
 			Object.keys(dataSet[table].cols).forEach((col) => {
-				configFile += `      - ${col}\n`;
+				configFile += `      - ${col.includes("_") ? col.split("_")[1] : col}\n`;
 				colNames += `      - ${dataSet[table].cols[col].replace(/\s>|>|\s/g, "_")}\n`;
 			});
 			configFile += colNames;
