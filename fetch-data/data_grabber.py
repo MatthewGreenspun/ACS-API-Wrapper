@@ -68,7 +68,7 @@ def request_data(vars, var_labels, geo="tract", api_key=None, batch_size=10):
 		data = res.json()
 		res_col_names = data[0]
 		col_names.extend(res_col_names[len(col_names):])
-		res_data = np.array(data[1:], dtype=np.int64)
+		res_data = np.array(data[1:], dtype=np.float64)
 		df = pd.DataFrame(res_data, columns=col_names)
 		with lock:
 			df_fragments.append(df)

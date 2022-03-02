@@ -12,6 +12,9 @@ vars, var_labels = get_vars_from_config(config)
 
 geo = config["geo"]
 api_key = config["api_key"]
+if api_key is None or "api key" in api_key.lower():
+	print("no api key provided")
+
 df_fragments = request_data(vars, var_labels, geo=geo, api_key=api_key)
 
 make_csv_from_fragments(df_fragments, var_labels)
