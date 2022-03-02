@@ -2,6 +2,7 @@ acs.yaml
 config.json
 data.json
 test.yaml
+corr-matrix-config.yaml
 *.csv
 shapefiles/
 __pycache__/
