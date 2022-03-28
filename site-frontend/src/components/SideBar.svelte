@@ -13,16 +13,25 @@
 
 	let allChecked = false;
 	let colArr: ColList = [];
-	function makeColArr(checked = false) {
-		colArr = [...Array(Object.keys(cols).length)].map((_, idx) => ({
-			checked,
-			col: isTable ? `${tableEntry.title}_${Object.keys(cols)[idx]}` : tableEntry.title,
-			colName: Object.values(cols)[idx]
-		}));
+	function makeColArr(allChecked = false) {
+		colArr = [...Array(Object.keys(cols).length)].map((_, idx) => {
+			const { title } = tableEntry;
+			const col = isTable ? Object.keys(cols)[idx] : tableEntry.title;
+			const checked = allChecked
+				? true
+				: dataSet[title] && col in dataSet[tableEntry.title].cols
+				? true
+				: false;
+			return {
+				checked,
+				col,
+				colName: Object.values(cols)[idx]
+			};
+		});
 	}
 	onMount(() => makeColArr());
 
-	$: cols, makeColArr();
+	$: cols, dataSet, makeColArr();
 	$: cols, (() => (allChecked = false))();
 
 	function handleSelectAllChecked() {
@@ -45,7 +54,7 @@
 	}
 </script>
 
-<div class="w-64 border-l-2 border-b-2 overflow-auto grow min-w-min">
+<div class="w-full sm:w-64 border-l-2 border-b-2 overflow-auto grow min-w-screen-1/3">
 	<div class="flex justify-end bg-teal-700">
 		<button class="bg-red-400 hover:bg-red-500 px-3 py-1" on:click={() => (showSideBar = false)}>
 			<svg
