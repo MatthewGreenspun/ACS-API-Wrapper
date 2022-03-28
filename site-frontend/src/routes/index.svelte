@@ -15,7 +15,7 @@
 		if (storkInitialized) return;
 		stork = (<any>window).stork;
 		await stork?.initialize();
-		await stork?.register("acs-tables", "/static/acs-tables.st", {
+		await stork?.register("acs-tables", "/acs-tables.st", {
 			forceOverwrite: true
 		});
 		storkInitialized = true;
@@ -25,7 +25,7 @@
 	let cols: { [tableName: string]: { [colName: string]: string } };
 	async function loadCols() {
 		if (colSearchInitialized) return;
-		const res = await fetch("/static/acs_2019_vars_by_tableid.json");
+		const res = await fetch("/acs_2019_vars_by_tableid.json");
 		cols = await res.json();
 		colSearchInitialized = true;
 	}
