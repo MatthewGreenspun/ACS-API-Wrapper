@@ -1,7 +1,9 @@
 <script lang="ts">
+	import TableCell from "./TableCell.svelte";
 	import type { DataSet } from "../types";
 	export let dataSet: DataSet;
 	export let shouldShowResults: boolean;
+	export let shouldShowSideBar: boolean;
 
 	$: numRows = Math.max(
 		...Object.keys(dataSet).map((table) => Object.keys(dataSet[table].cols).length)
@@ -42,8 +44,9 @@ census_tables:\n`;
 
 <div
 	class={fullView
-		? "absolute top-12 bottom-12 left-12 right-12 bg-white rounded-lg"
-		: "overflow-hidden border-2 rounded shadow-sm m-5 p-2"}
+		? "absolute top-12 bottom-12 left-12 right-12 bg-white rounded-lg transition-transform"
+		: "overflow-hidden border-2 rounded shadow-sm m-5 p-2 w-full " +
+		  (shouldShowSideBar ? "sm:max-w-screen-2/3 h-full" : "max-w-screen-90 h-full")}
 	on:click={() => (shouldShowResults = false)}
 >
 	{#if fullView}
@@ -135,12 +138,15 @@ census_tables:\n`;
 			</div>
 		</div>
 	{/if}
+
 	<div class={fullView ? "overflow-auto absolute top-12 bottom-3 left-3 right-3" : ""}>
 		<table class="mb-2 table-auto border-collapse border border-slate-500">
 			<thead>
 				<tr>
 					{#each Object.keys(dataSet) as table}
-						<th class="border border-slate-600 min-w-fit">{table}</th>
+						<th class="border border-slate-600 min-w-fit p-1"
+							><TableCell {table} bind:dataSet tableDesc={dataSet[table].tableName} />
+						</th>
 					{/each}
 				</tr>
 			</thead>
@@ -148,12 +154,24 @@ census_tables:\n`;
 				{#each Array(numRows > 0 ? numRows : 0) as _, idx}
 					<tr>
 						{#each Object.keys(dataSet) as table}
-							<td class="p-1 border border-slate-700 min-w-fit"
-								>{(() => {
-									const col = Object.keys(dataSet[table].cols)[idx];
-									return col ? col : "";
-								})()}</td
-							>
+							<td class="p-1 border border-slate-700 min-w-fit">
+								{#if Object.keys(dataSet[table].cols)[idx]}
+									<TableCell
+										bind:dataSet
+										tableDesc={dataSet[table].tableName}
+										{table}
+										isTable={false}
+										col={(() => {
+											const col = Object.keys(dataSet[table].cols)[idx];
+											return col ? col : "";
+										})()}
+										colDesc={(() => {
+											const col = Object.keys(dataSet[table].cols)[idx];
+											return col ? dataSet[table].cols[col] : "";
+										})()}
+									/>
+								{/if}
+							</td>
 						{/each}
 					</tr>
 				{/each}
