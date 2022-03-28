@@ -10,11 +10,12 @@
 		clearTimeout(debounceTimer);
 		debounceTimer = setTimeout(() => {
 			search = newSearchValue;
+			shouldShowResults = true;
 		}, debounceTime);
 	}
 </script>
 
-<div class="container flex max-w-xl m-auto mt-6">
+<div class="flex max-w-xl m-auto mt-6">
 	<div class="border-2 border-r-0 px-2 grid place-items-center rounded-l">
 		<svg
 			class="w-6 h-6 text-teal-600"

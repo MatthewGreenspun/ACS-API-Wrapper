@@ -12,7 +12,7 @@
 </script>
 
 <div
-	class="container m-auto max-w-xl max-h-96 overflow-auto -translate-x-2/4 absolute left-1/2 bg-white shadow-lg rounded-lg"
+	class="container m-auto max-w-xl max-h-96 overflow-auto -translate-x-2/4 absolute left-1/2 bg-white shadow-lg rounded-lg z-10"
 >
 	{#each results as result}
 		<div class="border-2 px-3 py-3 border-gray-100 rounded box-border mt-1 mb-1 ">
