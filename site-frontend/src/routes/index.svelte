@@ -64,18 +64,20 @@
 		on:load={initializeStork}></script>
 </svelte:head>
 
-<div class="flex w-screen h-screen max-w-full max-h-screen">
-	<div class="flex flex-col shrink grow-2 h-screen" on:click={handleHideResults}>
-		<div class="mb-16 relative">
+<div class="flex w-screen h-screen max-h-screen max-w-screen flex-col sm:flex-row">
+	<div class="flex flex-col shrink grow-2 h-screen items-center" on:click={handleHideResults}>
+		<div class="relative">
 			<h1 class="text-3xl text-center font-bold mt-4">
 				American Community Survey Data Set Builder
 			</h1>
 			<Search bind:search bind:shouldShowResults {storkInitialized} />
-			<SearchResults {results} />
+			{#if shouldShowResults}
+				<SearchResults {results} {dataSet} />
+			{/if}
 		</div>
 
 		{#if Object.keys(dataSet).length > 0}
-			<DataSetTable {dataSet} bind:shouldShowResults />
+			<DataSetTable bind:dataSet {shouldShowSideBar} bind:shouldShowResults />
 		{/if}
 	</div>
 	{#if shouldShowSideBar}
