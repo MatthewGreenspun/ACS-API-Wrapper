@@ -100,5 +100,11 @@ url = "{tables[table]['url']}"
 tableName = "{tables[table]['tableName']}"
 """
 		toml_txt += file_toml_txt
-	with open("stork/stork-table-config.toml", "w") as outfile:
+
+	toml_txt += """
+[output]
+excerpts_per_result = 0 
+displayed_results_count = 25
+"""
+	with open("stork/stork-config.toml", "w") as outfile:
 		outfile.write(toml_txt)
