@@ -33,6 +33,8 @@ census_tables:\n`;
 
 		return "data:text/yaml;charset=utf-8," + encodeURIComponent(configFile);
 	}
+	$: configDataURL = createDownloadLink();
+	$: dataSet, (configDataURL = createDownloadLink());
 </script>
 
 {#if fullView}
@@ -56,7 +58,7 @@ census_tables:\n`;
 				<button
 					class="my-1 mr-2 flex items-center bg-teal-400 px-3 rounded hover:bg-teal-500 transition h-7"
 				>
-					<a href={createDownloadLink()} download="config.yaml">
+					<a href={configDataURL} download="config.yaml">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							class="h-6 w-6"
@@ -98,7 +100,7 @@ census_tables:\n`;
 				<button
 					class="mr-2 flex items-center bg-teal-400 px-3 rounded hover:bg-teal-500 transition h-9"
 				>
-					<a href={createDownloadLink()} download="config.yaml">
+					<a href={configDataURL} download="config.yaml">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							class="h-6 w-6"
